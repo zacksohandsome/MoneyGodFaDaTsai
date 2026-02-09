@@ -272,13 +272,31 @@ public class FortuneGameManager : MonoBehaviour
                 Random.Range(100f, 400f)
             );
 
-            StartCoroutine(FlyMoney(rt, randomDir, scorePerMoney));
+            StartCoroutine(FlyMoney(rt, Vector2.zero, randomDir, scorePerMoney));
         }
     }
 
-    private IEnumerator FlyMoney(RectTransform rt, Vector2 targetOffset, int score)
+    public void SpawnMoneyAtPosition(Vector2 screenPos, int amount, int scorePerMoney)
     {
-        Vector2 startPos = Vector2.zero;
+        for (int i = 0; i < amount; i++)
+        {
+            RectTransform rt = GetMoney();
+
+            rt.anchoredPosition = screenPos;
+
+            // rotate money randomly
+            rt.localEulerAngles = new Vector3(0, 0, Random.Range(0f, 360f));
+            Vector2 randomDir = new Vector2(
+                Random.Range(-200f, 200f),
+                Random.Range(100f, 400f)
+            );
+            StartCoroutine(FlyMoney(rt, screenPos, randomDir, scorePerMoney));
+        }
+    }
+
+    private IEnumerator FlyMoney(RectTransform rt, Vector2 startPosition, Vector2 targetOffset, int score)
+    {
+        Vector2 startPos = startPosition;
         Vector2 midPos = startPos + targetOffset;
 
         float duration = 0.6f;
