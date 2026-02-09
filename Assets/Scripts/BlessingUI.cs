@@ -4,10 +4,11 @@ using UnityEngine.UI;
 
 public class BlessingUI : MonoBehaviour
 {
-    [SerializeField] private Text blessingText;
+    [SerializeField] private TextMeshProUGUI blessingText;
 
     public void ShowBlessing(string blessing)
     {
+        Debug.Log($"Εγ₯ά―¬ΊΦ: {blessing}");
         blessingText.text = ConvertToVertical(blessing);
         gameObject.SetActive(true);
     }
